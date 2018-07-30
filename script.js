@@ -1,7 +1,7 @@
 // this is the script of the website
 
 var posX, velX, accX, grav;
-grav = 0.25
+grav = -0.25
 newGame();
 
 // initial canvas stuff
