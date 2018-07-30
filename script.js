@@ -38,3 +38,5 @@ function newGame() {
 	velX = 0;
 	accX = 0;
 }
+
+console.log('task ACTUALLY complete');
