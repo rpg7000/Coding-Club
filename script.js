@@ -18,7 +18,7 @@ function move() {
 	
 	// first we undisplay the previous block
 	ctx.fillStyle = '#FFFFFF';
-	ctx.fillRect(posX + 48, 65 - (Math.pow(posX / 50, 2) / 2 * 25), 5, 5);
+	ctx.fillRect(posX + 48, 60 - (Math.pow(posX / 50, 2) / 2 * 25), 5, 5);
 	
 	// calculate new position
 	slopeAngle = Math.atan(posX / 50);
@@ -30,7 +30,7 @@ function move() {
 	
 	// draw new box
 	ctx.fillStyle = '#FF0000';
-	ctx.fillRect(posX + 49, 66 - (Math.pow(posX / 50, 2) / 2 * 25), 3, 3);
+	ctx.fillRect(posX + 49, 61 - (Math.pow(posX / 50, 2) / 2 * 25), 3, 3);
 }
 
 function newGame() {
