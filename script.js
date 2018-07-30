@@ -11,7 +11,7 @@ for (var i = -50; i <= 50; i++) {
 	ctx.fillRect(i + 50, 75 - (Math.pow(i / 50, 2) / 2 * 50), 1, 1);
 }
 
-canvas.style.background = url(canvas.toDataURL());
+canvas.style.background = 'url(canvas.toDataURL())';
 
 setInterval(move, 1000/30);
 
