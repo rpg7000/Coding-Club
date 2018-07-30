@@ -11,7 +11,7 @@ for (var i = -50; i <= 50; i++) {
 	ctx.fillRect(i + 50, 75 - (Math.pow(i / 50, 2) * 25), 1, 1);
 }
 
-setInterval('move', 1000/30);
+setInterval(move, 1000/30);
 
 function move() {
     // every 30th of a second movement will be calculated
