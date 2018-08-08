@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Test File</title>
+        <style>
+            h1 {
+                background-color: lightgrey;
+            }
+            
+            h2 {
+                background-color: lightgrey;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Spring Simulation</h1>
+        <canvas id="drawing" width="399px" height="399px" style="border: 1px solid black; position: absolute; right: 20px;"></canvas>
+        <div id="interface" style="width: 1100px; height: 399px; border: 1px solid black;">
+            <h2>Stats:</h2>
+            Position: <div id="output-pos">0</div><br>
+            Velocity: <div id="output-vel">0</div><br>
+            Acceleration: <div id="output-acc">0</div><br>
+            <h2>Options:</h2>
+            Starting velocity:
+            <input type="number" id="input-vel" value=15> m/s<br>
+            Mass of object:
+            <input type="number" id="input-mass" value=50> kg<br>
+            Coefficient of friction:
+            <input type="number" id="input-coeff" value=0.15><br>
+            Spring constant:
+            <input type="number" id="input-const" value=500> N/m<br>
+            <button id="btn-start">Begin simulation</button>
+        </div>
+        <h2>The Calculations</h2>
+        <p>Hooke's Law: Force of spring = Spring constant * Distance spring has compressed (F = KX)<br>
+        Friction: Force of friction = Coefficient of friction * Normal force (F = μN)</p>
+        Using these equations, we can calculate the forces acting on the block at all times.<br>
+        In this simulation, the spring's most stable position is at x = 35m, each ground marking representing one meter.
+    </body>
+    
+    <script src="spring-sim.js"></script>
+    
+</html>
