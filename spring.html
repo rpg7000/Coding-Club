@@ -22,16 +22,18 @@
             <h2>Stats:</h2>
             Position: <div id="output-pos">0</div><br>
             Velocity: <div id="output-vel">0</div><br>
-            Acceleration: <div id="output-acc">0</div><br>
+            Acceleration: <div id="output-acc">0</div>
             <h2>Options:</h2>
             Starting velocity:
             <input type="number" id="input-vel" value=15> m/s<br>
             Mass of object:
             <input type="number" id="input-mass" value=50> kg<br>
             Coefficient of friction:
-            <input type="number" id="input-coeff" value=0.15><br>
+            <input type="number" id="input-coeff" value=0.2><br>
             Spring constant:
             <input type="number" id="input-const" value=500> N/m<br>
+            Attach to spring on contact:
+            <input type="checkbox" id="attach"><br>
             <button id="btn-start">Begin simulation</button>
         </div>
         <h2>The Calculations</h2>
