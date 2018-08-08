@@ -16,11 +16,8 @@ function move() {
 	ctx.clearRect(posX + 47, 72 - (Math.pow(posX / 50, 2) / 2 * 50), 7, 7);
 	
 	// calculate new position
-    /*
-        To clarify, usually we would split the force of gravity into an x and y vector, but to make the code simpler,
-        I am just going to make the speed along the x-axis proportional to the slope that the particle is on, and calculate
-        the y-position from the x-position.
-    */
+    	/* when looking at acceleration on a slope, gravity is split into a perpendicular and tangential component, 
+	the latter of which dictates the acceleration along the slope. */
 	slopeAngle = Math.atan(posX / 50);
 	accX = grav * Math.sin(slopeAngle);
 	velX += accX;
