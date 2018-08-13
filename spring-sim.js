@@ -1,3 +1,6 @@
+// spring simulator
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 var posX, velX, accX, mass, isAttached, coefFrict, springConst, timer, multiplier;
 var canvas = document.getElementById("drawing");
 var ctx = canvas.getContext("2d");
@@ -5,7 +8,7 @@ ctx.strokeStyle = "#BBBBBB";
 ctx.fillRect(0, 210, 401, 191);
 ctx.fillRect(0, 0, 10, 190);
 for (var i = 1; i < 40; i++) {
- 
+    
     ctx.clearRect(i * 10, 211, 1, 8);
     
 }
@@ -27,7 +30,7 @@ function move() {
     if (velX < 0) {accX = 9.8 * coefFrict;}
     if (isAttached) {
         
-        // we need to many conditions to account for how multiplier will affect acceleration
+        // we need many conditions to account for how multiplier will affect acceleration
         if ((velX > 0 && posX > 35) || (velX <= 0 && posX < 35)) {accX += (-(springConst * (posX - 35)) / mass) * multiplier;}
         if ((velX <= 0 && posX > 35) || (velX > 0 && posX < 35)) {accX += (-(springConst * (posX - 35)) / mass) / multiplier;}
         
