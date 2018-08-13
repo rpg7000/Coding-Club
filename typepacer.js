@@ -1,4 +1,5 @@
 // typepacer
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var startTime, endTime, timeTaken, wordsPerMinute, totalWords, text, position, mistakes, winCondition, textArr;
 defineTextArr();
