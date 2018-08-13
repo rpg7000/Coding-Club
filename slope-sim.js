@@ -40,9 +40,9 @@ function move() {
 }
 
 function newGame() {
-	posX = -0.8;
-	velX = 0;
-	accX = 0;
-    grav = 0.1;
+    posX = -0.8;
+    velX = 0;
+    accX = 0;
+    grav = 8;
     graphCtx.fillStyle = '#FF0000';
 }
