@@ -1,11 +1,19 @@
-var posX, velX, accX, grav;
-grav = -0.25
-newGame();
+// slope simulator
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// initial canvas stuff
-var canvas = document.getElementById('graph');
-var ctx = canvas.getContext('2d');
-ctx.fillStyle = '#FF0000';
+var posX, velX, accX, grav;
+
+// initial canvas defining
+var bg = document.getElementById('bg');
+var bgCtx = bg.getContext('2d');
+var graph = document.getElementById('graph');
+var graphCtx = graph.getContext('2d');
+
+// drawing background (graph of 0.5x^2, from -1 to 1)
+for (var i = -100; i <= 100; i++) {
+    bgCtx.fillRect(i + 100, 150 - Math.pow(i / 100, 2) / 2 * 100, 1, 1);   
+}
+newGame();
 
 setInterval(move, 1000/30);
 
@@ -13,24 +21,28 @@ function move() {
 	// every 30th of a second movement will be calculated
 	
     // we first undisplay the previous block
-	ctx.clearRect(posX + 47, 72 - (Math.pow(posX / 50, 2) / 2 * 50), 7, 7);
+	graphCtx.clearRect(posX * 100 + 95, 145 - (Math.pow(posX, 2) / 2 * 100), 11, 11);
 	
 	// calculate new position
-    	/* when looking at acceleration on a slope, gravity is split into a perpendicular and tangential component, 
-	the latter of which dictates the acceleration along the slope. */
-	slopeAngle = Math.atan(posX / 50);
-	accX = grav * Math.sin(slopeAngle);
-	velX += accX;
-	posX += velX;
-	if (posX > 50) {posX -= 100;}
-	if (posX < -50) {posX += 100;}
+    /*
+        Small innaccuracy: Normally gravity is split into a perpendicular and tangential component, but the tangential component is used as
+        movement along the x-axis, and y is calculated from our position along the x-axis, in this program.
+    */
+	slopeAngle = Math.atan(posX);
+	accX = -grav * Math.sin(slopeAngle);
+	velX += accX / 30;
+	posX += velX / 30;
+	if (posX > 1) {posX -= 2;}
+	if (posX < -1) {posX += 2;}
 	
 	// draw new box
-	ctx.fillRect(posX + 48, 73 - (Math.pow(posX / 50, 2) / 2 * 50), 5, 5);
+	graphCtx.fillRect(posX * 100 + 96, 146 - (Math.pow(posX, 2) / 2 * 100), 9, 9);
 }
 
 function newGame() {
-	posX = -40;
+	posX = -0.8;
 	velX = 0;
 	accX = 0;
+    grav = 0.1;
+    graphCtx.fillStyle = '#FF0000';
 }
