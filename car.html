@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>car</title>
+        
+        <style>
+            body {
+                background-color: black;
+            }
+            
+            canvas {
+                border: 1px solid white;
+                position: absolute;
+                left: 10px;
+            }
+            
+            button {
+                background-color: white;
+                position: absolute;
+                height: 20px;
+            }
+            
+            h1 {
+                border: 1px solid white;
+                background-color: darkgray;
+                font-family: "Arial";
+            }
+            
+            .btn-cont {
+                width: 400px;
+                height: 30px;
+                border: 1px solid white;
+                position: relative;
+                left: 10px;
+                background-color: darkgray;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Racing Simulator</h1>
+        <div id="button-container" class="btn-cont">
+            <button id="btn-start" onclick="startCountDown()" style="left: 10px; top: 5px;">Begin Race</button>
+            <button id="btn-restart" onclick="restart()" style="right: 10px; display: none; top: 5px;">Restart</button>
+        </div>
+        <div id="canv-container" style="position: relative; margin-left: auto; margin-right: auto;">
+            <canvas id="bg" width="400px" height="400px" style="background-color: black"></canvas>
+            <canvas id="track" width="400px" height="400px"></canvas>
+        </div> <br>
+    </body>
+    
+    <script src="mapdata.json"></script>
+    <script src="car-race.js"></script>
+    
+</html>
