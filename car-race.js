@@ -1,4 +1,4 @@
-// car
+// Racing Simulator
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var posX, posY, velX, velY, accX, accY, angle, mapData, mapObj, countDownInterval, timeLeftUntilStart, moveInterval, startTime, endTime, gameState, currentMap, timeArr, totalTime;
@@ -165,54 +165,8 @@ function render() {
 function loadMap(mapNum) {
     
     // loading in map data from mapdata.json
-    switch(mapNum) {
-        case 0:
-            mapData = JSON.parse(map0);
-            mapObj = JSON.parse(map0Obj);
-            break;
-        case 1:
-            mapData = JSON.parse(map1);
-            mapObj = JSON.parse(map1Obj);
-            break;
-        case 2:
-            mapData = JSON.parse(map2);
-            mapObj = JSON.parse(map2Obj);
-            break;
-        case 3:
-            mapData = JSON.parse(map3);
-            mapObj = JSON.parse(map3Obj);
-            break;
-        case 4:
-            mapData = JSON.parse(map4);
-            mapObj = JSON.parse(map4Obj);
-            break;
-        case 5:
-            mapData = JSON.parse(map5);
-            mapObj = JSON.parse(map5Obj);
-            break;
-        case 6:
-            mapData = JSON.parse(map6);
-            mapObj = JSON.parse(map6Obj);
-            break;
-        case 7:
-            mapData = JSON.parse(map7);
-            mapObj = JSON.parse(map7Obj);
-            break;
-        case 8:
-            mapData = JSON.parse(map8);
-            mapObj = JSON.parse(map8Obj);
-            break;
-        case 9:
-            mapData = JSON.parse(map9);
-            mapObj = JSON.parse(map9Obj);
-            break;
-        case 10:
-            mapData = JSON.parse(map10);
-            mapObj = JSON.parse(map10Obj);
-            break;
-        default:
-            break;
-    }
+    mapData = maps[mapNum * 2];
+    mapObj = maps[mapNum * 2 + 1]; 
     
     // drawing the map
     if (mapData.length) {
