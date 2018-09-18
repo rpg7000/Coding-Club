@@ -2,39 +2,31 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Coding Club</title>
+        <title>3D</title>
+        
         <style>
+            h1 {
+                background-color: darkgray;
+            }
+            
             body {
                 font-family: Arial;
             }
             
-            h1 {
-                background-color: lightgrey;
-            }
-            
-            h2 {
-                font-size: 18px;
-            }
-            
-            button {
-                width: 120px;
-                height: 50px;
+            canvas {
+                position: absolute;
             }
         </style>
     </head>
 
     <body>
-        <h1>Coding Club</h1>
-        <h2>What is Coding Club?</h2>
-        Coding club is, unsurprisingly, a club about coding. <br>This website provides information and example programs for people to look at.
-        <h2>Example Code:</h2>
-        Click the links below to access example programs.<br><br>
-        <a href="spring.html">Spring Simulator</a><br>
-        <a href="slope.html">Slope Simulator</a><br>
-        <a href="type.html">Typing Test</a><br>
-        <a href="car.html">Racing Simulator</a>
-        <h2>How can I look at the code?</h2>
-        <a href="how-to.html">Tutorial</a>
+        <h1>3D Graphics Rendering</h1>
+        <div id="container" style="position: relative">
+            <canvas id="map" width=100px height=100px style="border: 1px solid #DDDDDD"></canvas>
+            <canvas id="main" width=400px height=400px style="border: 1px solid black"></canvas>
+        </div>
     </body>
+    
+    <script src="3D-sim.js"></script>
     
 </html>
