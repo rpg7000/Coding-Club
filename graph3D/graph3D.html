@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>3D Graphing</title>
+        
+        <style>
+            h1, h2 {
+                background-color: lightgray;
+            }
+            
+            canvas {
+                border: 1px solid black;
+            }
+            
+            body {
+                font-family: "Arial";
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Graph3D</h1>
+        
+        <canvas id="graph" width="400px" height="400px"></canvas><br>
+        <h2>Settings:</h2>
+        For graphing a paraboloid: z = ax^2 + by^2<br>
+        a: <input id="a" type="text" value="1"><br>
+        b: <input id="b" type="text" value="1"><br><br>
+        
+        <button id="btn-graph" onclick="makePolyArr()">Graph Function</button>
+    </body>
+    
+    <script src="make3D.js"></script>
+    <script src="graph3D.js"></script>
+    
+</html>
