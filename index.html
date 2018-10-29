@@ -2,41 +2,36 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Coding Club</title>
+        <title>3D Graphing</title>
+        
         <style>
+            h1, h2 {
+                background-color: lightgray;
+            }
+            
+            canvas {
+                border: 1px solid black;
+            }
+            
             body {
-                font-family: Arial;
-            }
-            
-            h1 {
-                background-color: lightgrey;
-            }
-            
-            h2 {
-                font-size: 18px;
-            }
-            
-            button {
-                width: 120px;
-                height: 50px;
+                font-family: "Arial";
             }
         </style>
     </head>
 
     <body>
-        <h1>Coding Club</h1>
-        <h2>What is Coding Club?</h2>
-        Coding club is, unsurprisingly, a club about coding. <br>This website provides information and example programs for people to look at.
-        <h2>Example Code:</h2>
-        Click the links below to access example programs.<br><br>
-        <a href="./spring/spring.html">Spring Simulator</a><br>
-        <a href="./slope/slope.html">Slope Simulator</a><br>
-        <a href="./type/type.html">Typing Test</a><br>
-        <a href="./car/car.html">Racing Simulator</a><br>
-        <a href="./3D/3D.html">3D Rendering</a><br>
-        <a href="./rsa/rsa.html">RSA Encryption</a>
-        <h2>How can I look at the code?</h2>
-        <a href="how-to.html">Tutorial</a>
+        <h1>Graph3D</h1>
+        
+        <canvas id="graph" width="400px" height="400px"></canvas><br>
+        <h2>Settings:</h2>
+        For graphing a paraboloid: z = ax^2 + by^2<br>
+        a: <input id="a" type="text" value="1"><br>
+        b: <input id="b" type="text" value="1"><br><br>
+        
+        <button id="btn-graph" onclick="makePolyArr()">Graph Function</button>
     </body>
+    
+    <script src="make3D.js"></script>
+    <script src="graph3D.js"></script>
     
 </html>
