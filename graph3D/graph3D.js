@@ -173,6 +173,7 @@ document.onmousemove = function(e) {
         camera.camY = -33.541 * Math.sin(camera.camAngleY);
         
         // render
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         make3D(camera, axes, canvas);
         make3D(camera, polygons, canvas);
         
