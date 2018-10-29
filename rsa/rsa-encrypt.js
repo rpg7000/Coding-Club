@@ -1,5 +1,6 @@
 // RSA Encryption
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// note: please don't use this in practice. i'm not liable for any of the crazy stuff you do with it. sorry.
 var p, q, n, e, d, totN;
 
 function keyGen() {
