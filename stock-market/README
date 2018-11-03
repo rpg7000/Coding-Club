@@ -1,0 +1,5 @@
+This is a stock market simulator.
+It takes the last 100 days of a stock chosen from a small pool of around 70 stock tickers.
+The user can then invest in the stock using 10000 fake dollars, and try to make as large of gains as possible.
+
+Credit for API goes to AlphaVantage, at https://www.alphavantage.co !
