@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Stock Predictor</title>
+        
+        <style>
+            body {
+                font-family: 'Arial';
+            }
+            
+            canvas {
+                border: 1px solid black;
+            }
+            
+            h1 {
+                background-color: lightgray;
+            }
+            
+            #credit {
+                position: absolute;
+                bottom: 10px;
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Stock Predictor</h1>
+        <canvas id="graph" width="800px" height="200px"></canvas><br>
+        <div id="stock" style="width: 800px; height: 30px; border: 1px solid black;">
+            <div id="stock-used" style="display: inline-block;">Stock Used: </div>
+            <button id="btn-hide-stock" style="position: absolute; left: 700px; width: 100px;" 
+                    onclick="document.getElementById('stock').style.display = 'none'">Hide Stock</button>
+        </div><br>
+        <div id="input-api">Input API Key: <input id="API-key" value="key"><br><br></div>
+        <button id="btn-start" onclick="newStock();">Begin Game</button><button id="btn-step" onclick="step();" disabled>Step Forward</button>
+        <div id="UI" style="display: none;">
+            <div id="funds">Funds: $10000 | Stocks: 0 | Stock Value: 0</div>
+            Buy (input number of stocks): <input id="input-buy" width="200px" type="number" value="0">
+            <button id="btn-buy" onclick="buy(parseInt(document.getElementById('input-buy').value))">Buy</button><br>
+            Sell (input number of stocks): <input id="input-sell" width="200px" type="number" value="0">
+            <button id="btn-sell" onclick="sell(parseInt(document.getElementById('input-sell').value))">Sell</button>
+        </div><br><br><br>
+        <div id="final" style="display: none;"></div>
+        <div id="credit">API Used : AlphaVantage - <a href="https://www.alphavantage.co/">https://www.alphavantage.co/</a></div>
+    </body>
+    
+    <script src="stock-predictor.js"></script>
+    
+</html>
