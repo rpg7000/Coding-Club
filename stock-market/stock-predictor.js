@@ -6,7 +6,7 @@ var data, dateArr, stockArr, dayNum, money, stocks, open, high, low, close, play
 var canvas = document.getElementById("graph");
 var ctx = canvas.getContext("2d");
 
-// XMLHttp
+// XMLHttp / initialization
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function newStock() {
@@ -67,78 +67,10 @@ function init() {
     
 }
 
-// main function
+// main functions
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function step() {
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    
-    // determining how large the graph must be
-    var max = parseFloat(data['Time Series (Daily)'][dateArr[99]]['2. high']);
-    var min = parseFloat(data['Time Series (Daily)'][dateArr[99]]['3. low']);
-    
-    for (var j = 1; j <= dayNum; j++) {
-        
-        if (parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['2. high']) > max) {
-            
-            max = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['2. high']);
-            
-        }
-        
-        if (parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['3. low']) < min) {
-            
-            min = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['3. low']);
-            
-        }
-        
-    }
-    
-    // Getting everything displayed
-    ctx.strokeStyle = '#888888';
-    for (var j = 0; j <= dayNum; j++) {
-        
-        // getting relevant values for the current day
-        open = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['1. open']);
-        high = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['2. high']);
-        low = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['3. low']);
-        close = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['4. close']);
-        
-        // calculating totals for current day
-        document.getElementById("funds").textContent = 'Funds: $' + (Math.floor(money * 100) / 100) + ' | Stocks: ' + stocks + ' | Stock Value: ' + (Math.floor(stocks * close * 100) / 100);
-        
-        // drawing japanese candlestick style stock graph
-        if (open < close) {
-            
-            ctx.fillStyle = "#11EE11";
-            ctx.fillRect((j * canvas.width / (dayNum + 1)), canvas.height - ((close - min) * (canvas.height / (max - min))), canvas.width / (dayNum + 1), (close - open) * (canvas.height / (max - min)));
-            
-        } else if (close < open) {
-            
-            ctx.fillStyle = "#EE1111";
-            ctx.fillRect((j * canvas.width / (dayNum + 1)), canvas.height - ((open - min) * (canvas.height / (max - min))), canvas.width / (dayNum + 1), (open - close) * (canvas.height / (max - min)));
-            
-        }
-        ctx.moveTo((j * canvas.width / (dayNum + 1)) + (canvas.width / (2 * (dayNum + 1))), canvas.height - (high - min) * (canvas.height / (max - min)));
-        ctx.lineTo((j * canvas.width / (dayNum + 1)) + (canvas.width / (2 * (dayNum + 1))), canvas.height - (low - min) * (canvas.height / (max - min)));
-        ctx.stroke();
-        
-    }
-    
-    // drawing in graph axes
-    ctx.beginPath();
-    ctx.fillStyle = '#000000';
-    ctx.strokeStyle = '#AAAAAA';
-    for (var i = 0; i < 4; i++) {
-        
-        ctx.moveTo(0, i * canvas.height / 4);
-        ctx.lineTo(canvas.width, i * canvas.height / 4);
-        ctx.fillText((Math.floor(100 * (max + (i / 4) * (min - max))) / 100).toString(), 0, 10 + i * (canvas.height) / 4);
-        
-    }
-    ctx.stroke();
-    ctx.fillText((Math.floor(100 * min) / 100).toString(), 0, canvas.height);
     
     // incrementing day value and checking if the user has finished
     dayNum++
@@ -158,25 +90,98 @@ function step() {
         
     }
     
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    
+    // determining how large the graph must be
+    var max = parseFloat(data['Time Series (Daily)'][dateArr[99]]['2. high']);
+    var min = parseFloat(data['Time Series (Daily)'][dateArr[99]]['3. low']);
+    
+    for (var j = 1; j < dayNum; j++) {
+        
+        if (parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['2. high']) > max) {
+            
+            max = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['2. high']);
+            
+        }
+        
+        if (parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['3. low']) < min) {
+            
+            min = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['3. low']);
+            
+        }
+        
+    }
+    
+    // Getting everything displayed
+    ctx.strokeStyle = '#888888';
+    for (var j = 0; j < dayNum; j++) {
+        
+        // getting relevant values for the current day
+        open = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['1. open']);
+        high = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['2. high']);
+        low = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['3. low']);
+        close = parseFloat(data['Time Series (Daily)'][dateArr[99 - j]]['4. close']);
+        
+        // calculating totals for current day
+        updateUI();
+        
+        // drawing japanese candlestick style stock graph
+        if (open < close) {
+            
+            ctx.fillStyle = "#11EE11";
+            ctx.fillRect((j * canvas.width / dayNum), canvas.height - ((close - min) * (canvas.height / (max - min))), canvas.width / dayNum, (close - open) * (canvas.height / (max - min)));
+            
+        } else if (close < open) {
+            
+            ctx.fillStyle = "#EE1111";
+            ctx.fillRect((j * canvas.width / dayNum), canvas.height - ((open - min) * (canvas.height / (max - min))), canvas.width / dayNum, (open - close) * (canvas.height / (max - min)));
+            
+        }
+        ctx.moveTo((j * canvas.width / dayNum) + (canvas.width / (2 * dayNum)), canvas.height - (high - min) * (canvas.height / (max - min)));
+        ctx.lineTo((j * canvas.width / dayNum) + (canvas.width / (2 * dayNum)), canvas.height - (low - min) * (canvas.height / (max - min)));
+        ctx.stroke();
+        
+    }
+    
+    // drawing in graph axes
+    ctx.beginPath();
+    ctx.fillStyle = '#000000';
+    ctx.strokeStyle = '#AAAAAA';
+    for (var i = 0; i < 4; i++) {
+        
+        ctx.moveTo(0, i * canvas.height / 4);
+        ctx.lineTo(canvas.width, i * canvas.height / 4);
+        ctx.fillText((Math.floor(100 * (max + (i / 4) * (min - max))) / 100).toString(), 0, 10 + i * (canvas.height) / 4);
+        
+    }
+    ctx.stroke();
+    ctx.fillText((Math.floor(100 * min) / 100).toString(), 0, canvas.height);
+    
 }
 
 function buy(amount) {
     
     if (playingGame && amount > 0) {
         
-        if (money >= (close * amount)) {
+        // 10 dollar fee is needed to buy
+        if (money >= (close * amount) + 10) {
             
             stocks += amount;
-            money -= (close * amount);
-            document.getElementById("funds").textContent = 'Funds: $' + (Math.floor(money * 100) / 100) + ' | Stocks: ' + stocks + ' | Stock Value: ' + (Math.floor(stocks * close * 100) / 100);
+            money -= (close * amount + 10);
+            updateUI();
             
         } else {
             
-            alert('Not enough money.');
+            alert('Insufficient funds for transaction.');
             
         }
         
-    } 
+    } else {
+        
+        alert('Please input amount of stocks to buy.');
+        
+    }
     
 }
 
@@ -184,75 +189,39 @@ function sell(amount) {
     
     if (playingGame && amount > 0) {
         
-        if (stocks > 0) {
+        // 10 dollar fee is needed to sell
+        // also you can sell more stocks than you have, known as selling short
+        if (money >= 10) {
             
             stocks -= amount;
-            money += (close * amount);
-            document.getElementById("funds").textContent = 'Funds: $' + (Math.floor(money * 100) / 100) + ' | Stocks: ' + stocks + ' | Stock Value: ' + (Math.floor(stocks * close * 100) / 100);
+            money += (close * amount - 10);
+            updateUI();
             
         } else {
             
-            alert('Not enough stocks.');
+            alert('Insufficient funds for transaction.');
             
         }
+        
+    } else {
+        
+        alert('Please input amount of stocks to sell.');
         
     }
     
 }
 
-stockArr = ["VNET", "AKAM", "ANF", "BIDU", "BCOR", "WIFI", "CARB", "JRJC", "CCIH", "CCOI", "CXDO", "ENV", "FB", "GDDY", "IAC", "IIJI", "JCOM", "LLNW", "MOMO", "NTES", "EGOV", "SIFY", "SINA", "TCTZF", "TCEHY", "TCX", "XNET", "YAHOY", "YNDX", "TWTR", "AAPL", "MSFT", "RCA", "GLD", "GOOG", "BAC", "ABT", "XOM", "AMZN", "ALL", "AMD", "AET", "CELG", "MMM", "LUV", "ABBV", "IBM", "INTC", "ADBE", "AVP", "AXP", "AEE", "APD", "ACB", "AZO", "AGN", "AVY", "AAN", "MRO", "ACN", "ARW", "AAC", "WMT", "ADM", "AYI", "TXN", "TGT", "ADSK", "ATU", "AKS", "AEM", "WHR", "SBUX", "AHC", "ABX", "CSCO", "ALTR"];
-
-// for testing new batches of stocks
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-var i = 29;
-test();
-var testIntervals = setInterval(test, 20000);
-
-function test() {
+function updateUI() {
     
-    var stock = stockArr[i];
-    
-    var request = new XMLHttpRequest();
-    
-    request.open('GET', 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + stock + '&apikey=WMH5EOMQB15Z7COE', true);
-    
-    request.onload = function() {
-        
-        console.log(request.status);
-        
-        if (request.status >= 200 && request.status < 400) {
-            
-            var data = JSON.parse(this.response);
-            
-            if (data["Time Series (Daily)"]["2018-11-02"]["4. close"] < 3) {
-                
-                console.log(stock + ' is too small.');
-                console.log(data["Time Series (Daily)"]["2018-11-02"]["4. close"] + ' is its closing value.');
-                
-            } else {
-                
-                document.getElementById("stock-used").textContent += (stock + ' ' + i + ' | ');
-                
-            }
-            
-        } else {
-            
-            console.log('SORRY NOTHING');
-            
-        }
-        
-    }
-    
-    request.send();
-    
-    i++
-    if (i >= stockArr.length) {
-    
-        clearInterval(testIntervals);
-    
-    }
+    document.getElementById("output-day").innerHTML = 
+        '<span style="font-size: 20pt">Day:</span><br>' + dayNum + ' / 100';
+    document.getElementById("output-funds").innerHTML = 
+        '<span style="font-size: 20pt">Funds:</span><br>$' + (Math.floor(money * 100) / 100) + '(' + (Math.floor((money + (stocks * close)) * 100) / 100) + ')';
+    document.getElementById("output-stocks").innerHTML = 
+        '<span style="font-size: 20pt">Stocks:</span><br>' + stocks
+    document.getElementById("output-stockval").innerHTML = 
+        '<span style="font-size: 20pt">Stock Value:</span><br>' + close + '(' + (Math.floor(stocks * close * 100) / 100) + ')';
     
 }
-*/
+
+stockArr = ['VNET', 'AKAM', 'ANF', 'BIDU', 'BCOR', 'WIFI', 'CARB', 'JRJC', 'CCIH', 'CCOI', 'CXDO', 'ENV', 'FB', 'GDDY', 'IAC', 'IIJI', 'JCOM', 'LLNW', 'MOMO', 'NTES', 'EGOV', 'SIFY', 'SINA', 'TCTZF', 'TCEHY', 'TCX', 'XNET', 'YAHOY', 'YNDX', 'TWTR', 'AAPL', 'MSFT', 'RCA', 'GLD', 'GOOG', 'BAC', 'ABT', 'XOM', 'AMZN', 'ALL', 'AMD', 'AET', 'CELG', 'MMM', 'LUV', 'ABBV', 'IBM', 'INTC', 'ADBE', 'AVP', 'AXP', 'AEE', 'APD', 'ACB', 'AZO', 'AGN', 'AVY', 'AAN', 'MRO', 'ACN', 'ARW', 'AAC', 'WMT', 'ADM', 'AYI', 'TXN', 'TGT', 'ADSK', 'ATU', 'AKS', 'AEM', 'WHR', 'SBUX', 'AHC', 'ABX', 'CSCO', 'ALTR', 'A', 'AXNX', 'BABA', 'B', 'BA', 'BE', 'C', 'CNF', 'CGC', 'CWK', 'CNST', 'D', 'DOMO', 'DDMXU', 'DIS', 'E', 'ESTC', 'EB', 'ELAN', 'F', 'FTACU', 'FTCH', 'FOCS', 'G', 'GE', 'GH', 'GRTS', 'GMDA', 'H', 'HYRE', 'HAS', 'HD', 'HMNY', 'I', 'IQ', 'QQQ', 'JG', 'JD', 'JPM', 'JNJ', 'JCP', 'K', 'KHC', 'KOD', 'KO', 'KMI', 'L', 'LTHM', 'LOGC', 'LQDA', 'LAIX', 'M', 'MU', 'T', 'NIO', 'NVDA', 'NFLX', 'NIU', 'NTGN', 'O', 'ORTX', 'OPRA', 'OSMT', 'OLED', 'P', 'PDD', 'PLAN', 'PRNB', 'PT', 'QTT', 'QCOM', 'QRVO', 'QD', 'R', 'RMED', 'RUBY', 'REPL', 'RRI', 'S', 'STNE', 'SQ', 'SPY', 'TSLA', 'TLRY', 'TRVN', 'UPWK', 'UXIN', 'UROV', 'UTX', 'UVXY', 'V', 'VIOT', 'VCNX', 'VTEC', 'VZ', 'W', 'WTW', 'WFC', 'X', 'XYF', 'XXII', 'XPO', 'Y', 'YETI', 'YI', 'YMAB', 'YECO', 'Z', 'ZNGA', 'ZYNE', 'ZS', 'ZUO'];
