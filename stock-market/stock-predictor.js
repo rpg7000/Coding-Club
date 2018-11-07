@@ -71,9 +71,12 @@ function init() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function step() {
-    
-    // incrementing day value and checking if the user has finished
+
     dayNum++
+    
+    dispGraph();
+    
+    // checking if the user has finished
     if (dayNum === 100) {
         
         // turning off game
@@ -89,6 +92,74 @@ function step() {
         document.getElementById("final").style.display = '';
         
     }
+    
+}
+
+function buy(amount) {
+    
+    if (playingGame && amount > 0) {
+        
+        // 10 dollar fee is needed to buy
+        if (money >= (close * amount) + 10) {
+            
+            stocks += amount;
+            money -= (close * amount + 10);
+            updateUI();
+            
+        } else {
+            
+            alert('Insufficient funds for transaction.');
+            
+        }
+        
+    } else {
+        
+        alert('Please input amount of stocks to buy.');
+        
+    }
+    
+}
+
+function sell(amount) {
+    
+    if (playingGame && amount > 0) {
+        
+        // 10 dollar fee is needed to sell
+        // also you can sell more stocks than you have, known as selling short
+        if (money >= 10) {
+            
+            stocks -= amount;
+            money += (close * amount - 10);
+            updateUI();
+            
+        } else {
+            
+            alert('Insufficient funds for transaction.');
+            
+        }
+        
+    } else {
+        
+        alert('Please input amount of stocks to sell.');
+        
+    }
+    
+}
+
+function updateUI() {
+    
+    document.getElementById("output-day").innerHTML = 
+        '<span style="font-size: 20pt">Day:</span><br>' + dayNum + ' / 100';
+    document.getElementById("output-funds").innerHTML = 
+        '<span style="font-size: 20pt">Funds:</span><br>$' + (Math.floor(money * 100) / 100) + '(' + (Math.floor((money + (stocks * close)) * 100) / 100) + ')';
+    document.getElementById("output-stocks").innerHTML = 
+        '<span style="font-size: 20pt">Stocks:</span><br>' + stocks
+    document.getElementById("output-stockval").innerHTML = 
+        '<span style="font-size: 20pt">Stock Value:</span><br>' + close + '(' + (Math.floor(stocks * close * 100) / 100) + ')';
+    
+}
+
+function dispGraph() {
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
@@ -160,68 +231,4 @@ function step() {
     
 }
 
-function buy(amount) {
-    
-    if (playingGame && amount > 0) {
-        
-        // 10 dollar fee is needed to buy
-        if (money >= (close * amount) + 10) {
-            
-            stocks += amount;
-            money -= (close * amount + 10);
-            updateUI();
-            
-        } else {
-            
-            alert('Insufficient funds for transaction.');
-            
-        }
-        
-    } else {
-        
-        alert('Please input amount of stocks to buy.');
-        
-    }
-    
-}
-
-function sell(amount) {
-    
-    if (playingGame && amount > 0) {
-        
-        // 10 dollar fee is needed to sell
-        // also you can sell more stocks than you have, known as selling short
-        if (money >= 10) {
-            
-            stocks -= amount;
-            money += (close * amount - 10);
-            updateUI();
-            
-        } else {
-            
-            alert('Insufficient funds for transaction.');
-            
-        }
-        
-    } else {
-        
-        alert('Please input amount of stocks to sell.');
-        
-    }
-    
-}
-
-function updateUI() {
-    
-    document.getElementById("output-day").innerHTML = 
-        '<span style="font-size: 20pt">Day:</span><br>' + dayNum + ' / 100';
-    document.getElementById("output-funds").innerHTML = 
-        '<span style="font-size: 20pt">Funds:</span><br>$' + (Math.floor(money * 100) / 100) + '(' + (Math.floor((money + (stocks * close)) * 100) / 100) + ')';
-    document.getElementById("output-stocks").innerHTML = 
-        '<span style="font-size: 20pt">Stocks:</span><br>' + stocks
-    document.getElementById("output-stockval").innerHTML = 
-        '<span style="font-size: 20pt">Stock Value:</span><br>' + close + '(' + (Math.floor(stocks * close * 100) / 100) + ')';
-    
-}
-
-stockArr = ['VNET', 'AKAM', 'ANF', 'BIDU', 'BCOR', 'WIFI', 'CARB', 'JRJC', 'CCIH', 'CCOI', 'CXDO', 'ENV', 'FB', 'GDDY', 'IAC', 'IIJI', 'JCOM', 'LLNW', 'MOMO', 'NTES', 'EGOV', 'SIFY', 'SINA', 'TCTZF', 'TCEHY', 'TCX', 'XNET', 'YAHOY', 'YNDX', 'TWTR', 'AAPL', 'MSFT', 'RCA', 'GLD', 'GOOG', 'BAC', 'ABT', 'XOM', 'AMZN', 'ALL', 'AMD', 'AET', 'CELG', 'MMM', 'LUV', 'ABBV', 'IBM', 'INTC', 'ADBE', 'AVP', 'AXP', 'AEE', 'APD', 'ACB', 'AZO', 'AGN', 'AVY', 'AAN', 'MRO', 'ACN', 'ARW', 'AAC', 'WMT', 'ADM', 'AYI', 'TXN', 'TGT', 'ADSK', 'ATU', 'AKS', 'AEM', 'WHR', 'SBUX', 'AHC', 'ABX', 'CSCO', 'ALTR', 'A', 'AXNX', 'BABA', 'B', 'BA', 'BE', 'C', 'CNF', 'CGC', 'CWK', 'CNST', 'D', 'DOMO', 'DDMXU', 'DIS', 'E', 'ESTC', 'EB', 'ELAN', 'F', 'FTACU', 'FTCH', 'FOCS', 'G', 'GE', 'GH', 'GRTS', 'GMDA', 'H', 'HYRE', 'HAS', 'HD', 'HMNY', 'I', 'IQ', 'QQQ', 'JG', 'JD', 'JPM', 'JNJ', 'JCP', 'K', 'KHC', 'KOD', 'KO', 'KMI', 'L', 'LTHM', 'LOGC', 'LQDA', 'LAIX', 'M', 'MU', 'T', 'NIO', 'NVDA', 'NFLX', 'NIU', 'NTGN', 'O', 'ORTX', 'OPRA', 'OSMT', 'OLED', 'P', 'PDD', 'PLAN', 'PRNB', 'PT', 'QTT', 'QCOM', 'QRVO', 'QD', 'R', 'RMED', 'RUBY', 'REPL', 'RRI', 'S', 'STNE', 'SQ', 'SPY', 'TSLA', 'TLRY', 'TRVN', 'UPWK', 'UXIN', 'UROV', 'UTX', 'UVXY', 'V', 'VIOT', 'VCNX', 'VTEC', 'VZ', 'W', 'WTW', 'WFC', 'X', 'XYF', 'XXII', 'XPO', 'Y', 'YETI', 'YI', 'YMAB', 'YECO', 'Z', 'ZNGA', 'ZYNE', 'ZS', 'ZUO'];
+stockArr = ['VNET', 'AKAM', 'ANF', 'BIDU', 'BCOR', 'WIFI', 'CARB', 'JRJC', 'CCIH', 'CCOI', 'CXDO', 'ENV', 'FB', 'GDDY', 'IAC', 'IIJI', 'JCOM', 'LLNW', 'MOMO', 'NTES', 'EGOV', 'SIFY', 'SINA', 'TCTZF', 'TCEHY', 'TCX', 'XNET', 'YAHOY', 'YNDX', 'TWTR', 'AAPL', 'MSFT', 'RCA', 'GLD', 'GOOG', 'BAC', 'ABT', 'XOM', 'AMZN', 'ALL', 'AMD', 'AET', 'CELG', 'MMM', 'LUV', 'ABBV', 'IBM', 'INTC', 'ADBE', 'AVP', 'AXP', 'AEE', 'APD', 'ACB', 'AZO', 'AGN', 'AVY', 'AAN', 'MRO', 'ACN', 'ARW', 'AAC', 'WMT', 'ADM', 'AYI', 'TXN', 'TGT', 'ADSK', 'ATU', 'AKS', 'AEM', 'WHR', 'SBUX', 'AHC', 'ABX', 'CSCO', 'ALTR', 'A', 'BABA', 'B', 'BA', 'C', 'CGC', 'D', 'DIS', 'E', 'F', 'G', 'GE', 'H', 'HAS', 'HD', 'I', 'IQ', 'QQQ', 'JD', 'JPM', 'JNJ', 'JCP', 'K', 'KHC', 'KO', 'KMI', 'L', 'M', 'MU', 'T', 'NVDA', 'NFLX', 'O', 'OLED', 'P', 'QCOM', 'QRVO', 'QD', 'R', 'S', 'SQ', 'SPY', 'TSLA', 'UTX', 'UVXY', 'V', 'VZ', 'W', 'WTW', 'WFC', 'X', 'XXII', 'XPO', 'Y', 'YECO', 'Z', 'ZNGA', 'ZYNE', 'ZS', 'ZUO'];
