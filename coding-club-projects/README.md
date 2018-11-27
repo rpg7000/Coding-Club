@@ -1,2 +1,2 @@
-Please place your projects within this file.
-If you do not place your projects within this file, I'm not gonna accept your pull request. Sorry. Deal with it.
+Please place your projects within this file.<br>
+If you do not place your projects within this file, I'm not going to accept your pull request. <br><br> Sorry.
