@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2048</title>
+
+    <style>
+
+        .body {
+            font-family: "Segoe UI";
+            font-weight: bold;
+        }
+
+        .box {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+        }
+        
+        ._2 { background-color: #c9d8c9; }
+        ._4 { background-color: #8cf38c; }
+        ._8 { background-color: #79e415; }
+        ._16 { background-color: #fbff00; }
+        ._32 { background-color: #c0731b; color: white; }
+        ._64 { background-color: #830d0d; color: white; }
+        ._128 { background-color: #ee0808; color: white; }
+        ._256 { background-color: #e411d2; color: white; }
+        ._512 { background-color: #2b1fd3; color: white; }
+        ._1024 { background-color: #18a0d6; color: white; }
+        ._2048 { background-color: #14ac8b; color: white;}
+    </style>
+</head>
+<body>
+
+    <h2>Score: <span id="score-text">0</span></h2>
+
+    <table border="1">
+        <tbody id="game-board">
+        </tbody>
+    </table>
+    
+    <script>
+
+        var gameBoard = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+        ];
+
+        var score = 0;
+        var scoreElement = document.getElementById('score-text');
+
+        randomSpawn(gameBoard);
+        randomSpawn(gameBoard);
+        drawBoard(gameBoard);
+
+        document.onkeyup = (event) => {
+            
+            if(!(event.keyCode > 36 && event.keyCode < 41))
+                return;
+
+            slide(event.keyCode, gameBoard);
+            randomSpawn(gameBoard);
+            drawBoard(gameBoard);
+
+        };
+
+        function randomSpawn(board) {
+
+            var emptySpaces = [];
+
+            for(var i = 0; i < 16; i++) {
+
+                var box = board[Math.floor(i / 4)][i % 4];
+                if(box == 0)
+                    emptySpaces.push(i);
+
+            }
+
+            var randIndex = emptySpaces[Math.floor(Math.random() * emptySpaces.length)];
+            board[Math.floor(randIndex / 4)][randIndex % 4] = (Math.floor(Math.random() * 100) > 50)? 2 : 4;
+            
+        }
+
+        function slide(dir, board) {
+
+            for(var j = 0; j < 3; j++) {
+
+                if(dir == 39 || dir == 40) {
+                    for(var i = 2; i >= 0; i--) {
+                        score += step(i, dir, board);
+                    }
+                } else {
+                    for(var i = 1; i <= 3; i++) {
+                        score += step(i, dir, board);
+                    }
+                }
+            }
+
+            
+            
+            scoreElement.textContent = score;
+
+        }
+
+        function step(ind, dir, board) {
+
+            var newScore = 0;
+
+            switch(dir) {
+
+                case 39:
+                    // console.log("right");
+                    board.map(row => {
+                        
+                        if(row[ind] == row[ind + 1] || row[ind + 1] == 0) {
+                            if(row[ind] == row[ind + 1])
+                                newScore += 2 * row[ind + 1];
+                            row[ind + 1] += row[ind];
+                            row[ind] = 0;
+                            
+                        }
+
+                    });
+                    
+                    break;
+
+                case 38:
+                    // console.log("up");
+
+                    board[ind].map((box, col) => {
+
+                        if(board[ind - 1][col] == 0 || board[ind - 1][col] == box) {
+                            if(board[ind - 1][col] == box)
+                                newScore += 2 * board[ind - 1][col];
+                            board[ind - 1][col] += box;
+                            board[ind][col] = 0;
+                        }
+
+                    });
+
+                    break;
+
+                case 37:
+                    // console.log("left");
+
+                    board.map(row => {
+                        
+                        if(row[ind] == row[ind - 1] || row[ind - 1] == 0) {
+                            if(row[ind] == row[ind - 1])
+                                newScore += 2 * row[ind - 1];
+                            row[ind - 1] += row[ind];
+                            row[ind] = 0;
+                        }
+
+                    });
+
+                    break;
+
+                case 40:
+                    // console.log("down");
+
+                    board[ind].map((box, col) => {
+
+                        if(board[ind + 1][col] == 0 || board[ind + 1][col] == box) {
+                            if(board[ind + 1][col] == box)
+                                newScore += 2 * board[ind + 1][col];
+                            board[ind + 1][col] += box;
+                            board[ind][col] = 0;
+                        }
+
+                    });
+
+                    break;
+            }
+
+            return newScore;
+        }
+
+        function drawBoard(board) {
+
+            var boardElement = document.getElementById('game-board');
+            boardElement.innerHTML = "";
+
+            board.map(row => {
+
+                var rowElement = document.createElement('tr');
+
+                row.map(box => {
+                    var boxElement = document.createElement('td');
+                    boxElement.textContent = (box != 0)? box : "";
+                    boxElement.className = "box _" + box;
+                    rowElement.appendChild(boxElement);
+                });
+
+                boardElement.appendChild(rowElement);
+
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>
