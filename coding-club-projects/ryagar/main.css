@@ -1,0 +1,22 @@
+        .body {
+            font-family: "Segoe UI";
+            font-weight: bold;
+        }
+
+        .box {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+        }
+        
+        ._2 { background-color: #c9d8c9; }
+        ._4 { background-color: #8cf38c; }
+        ._8 { background-color: #79e415; }
+        ._16 { background-color: #fbff00; }
+        ._32 { background-color: #c0731b; color: white; }
+        ._64 { background-color: #830d0d; color: white; }
+        ._128 { background-color: #ee0808; color: white; }
+        ._256 { background-color: #e411d2; color: white; }
+        ._512 { background-color: #2b1fd3; color: white; }
+        ._1024 { background-color: #18a0d6; color: white; }
+        ._2048 { background-color: #14ac8b; color: white;}
