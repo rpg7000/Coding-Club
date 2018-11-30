@@ -17,7 +17,7 @@
             return;
 
             slide(event.keyCode, gameBoard);
-            try {randomSpawn(gameBoard);}catch(err){alert('You Have lost'); var gameBoard = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]]; var score = 0; var scoreElement = document.getElementById('score-text'); randomSpawn(gameBoard); randomSpawn(gameBoard); drawBoard(gameBoard);}
+            try {randomSpawn(gameBoard);}catch(err){alert('You Have lost'); gameBoard = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]]; score = 0; scoreElement = document.getElementById('score-text'); randomSpawn(gameBoard); randomSpawn(gameBoard); drawBoard(gameBoard);}
             drawBoard(gameBoard);
         };
         function randomSpawn(board) {
@@ -34,6 +34,7 @@
 
             var randIndex = emptySpaces[Math.floor(Math.random() * emptySpaces.length)];
             board[Math.floor(randIndex / 4)][randIndex % 4] = (Math.floor(Math.random() * 100) > 50)? 2 : 4;
+            drawBoard(gameBoard)
             
         }
 
@@ -55,7 +56,7 @@
             
             
             scoreElement.textContent = score;
-
+            drawBoard(gameBoard)
         }
 
         function step(ind, dir, board) {
