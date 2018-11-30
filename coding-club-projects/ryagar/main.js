@@ -14,13 +14,17 @@
 
         document.onkeyup = (event) => {
             
-            if(!(event.keyCode > 36 && event.keyCode < 41))
+            if(!(event.keyCode > 36 && event.keyCode < 41)) 
                 return;
 
-            slide(event.keyCode, gameBoard);
-            randomSpawn(gameBoard);
+                slide(event.keyCode, gameBoard);
+                try {
+                    randomSpawn(gameBoard);
+                }
+                catch(err){
+                    alert('loose');
+                }
             drawBoard(gameBoard);
-
         };
         document.onkeyup = (event) => {
             
