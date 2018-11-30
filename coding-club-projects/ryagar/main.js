@@ -11,20 +11,15 @@
         randomSpawn(gameBoard);
         randomSpawn(gameBoard);
         drawBoard(gameBoard);
-
         document.onkeyup = (event) => {
             
-            if(!(event.keyCode > 36 && event.keyCode < 41)) 
-                return;
+            if(!(event.keyCode > 36 && event.keyCode < 41))
+            return;
 
-                slide(event.keyCode, gameBoard);
-                try {
-                    randomSpawn(gameBoard);
-                }
-                catch(err){
-                    alert('loose');
-                }
+            slide(event.keyCode, gameBoard);
+            try {randomSpawn(gameBoard);}catch(err){alert('loose');}
             drawBoard(gameBoard);
+
         };
         document.onkeyup = (event) => {
             
