@@ -22,6 +22,16 @@
             drawBoard(gameBoard);
 
         };
+        document.onkeyup = (event) => {
+            
+            if(!(event.keyCode > 96 && event.keyCode < 102))
+                return;
+
+            step(1, event.keyCode, gameBoard);
+            randomSpawn(gameBoard);
+            drawBoard(gameBoard);
+
+        };
 
         function randomSpawn(board) {
 
