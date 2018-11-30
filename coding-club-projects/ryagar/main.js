@@ -17,21 +17,9 @@
             return;
 
             slide(event.keyCode, gameBoard);
-            try {randomSpawn(gameBoard);}catch(err){alert('loose');}
+            try {randomSpawn(gameBoard);}catch(err){alert('You Have lost'); var gameBoard = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]]; var score = 0; var scoreElement = document.getElementById('score-text'); randomSpawn(gameBoard); randomSpawn(gameBoard); drawBoard(gameBoard);}
             drawBoard(gameBoard);
-
         };
-        document.onkeyup = (event) => {
-            
-            if(!(event.keyCode > 96 && event.keyCode < 102))
-                return;
-
-            step(1, event.keyCode, gameBoard);
-            randomSpawn(gameBoard);
-            drawBoard(gameBoard);
-
-        };
-
         function randomSpawn(board) {
 
             var emptySpaces = [];
